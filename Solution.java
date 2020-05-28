@@ -4,27 +4,21 @@ public class Solution {
     public static void main(String[] args) throws IOException {
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-
-        FileInputStream fileIn = new FileInputStream(reader.readLine());
-        FileOutputStream fileOut1 = new FileOutputStream(reader.readLine());
-        FileOutputStream fileOut2 = new FileOutputStream(reader.readLine());
+        FileInputStream file1 = new FileInputStream(reader.readLine());
+        FileOutputStream file2 = new FileOutputStream(reader.readLine());
+        FileOutputStream file3 = new FileOutputStream(reader.readLine());
 
         reader.close();
 
-        byte[] list1 = new byte[fileIn.available()];
-        fileIn.read(list1);
+        byte[] buffer = new byte[file1.available()];
+        if (file1.available() > 0) {
+            int count = file1.read(buffer);
+            file2.write(buffer, 0, (count + 1) / 2);
 
-        int num = list1.length;
-        int half = 0;
-
-        if((list1.length)%2==0) half = list1.length/2;
-        else half = list1.length/2+1;
-
-        fileOut1.write(list1, 0, half);
-        fileOut2.write(list1,half,half-1);
-
-        fileIn.close();
-        fileOut1.close();
-        fileOut2.close();
+            file3.write(buffer, (count + 1) / 2, count / 2);
+        }
+        file1.close();
+        file2.close();
+        file3.close();
     }
 }
